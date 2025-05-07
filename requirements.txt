@@ -1,0 +1,34 @@
+# Backend & API
+fastapi
+uvicorn[standard]
+python-multipart
+aiofiles
+python-dotenv
+
+# Document parsing
+PyMuPDF
+pdfplumber
+python-docx
+pytesseract
+Pillow
+
+# LLMs & NLP
+openai
+transformers
+sentence-transformers
+
+# Vector store & RAG
+faiss-cpu
+langchain
+chromadb
+
+# Optional: Graph DB (you can add later if needed)
+# neo4j
+
+
+# Frontend
+streamlit
+
+# OCR (if you want to use it)
+opencv-python
+

@@ -1,0 +1,45 @@
+version: "3.8"
+
+services: 
+  smart-agent:
+    # Use the image build from the Dockerfile in the current directory
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: exam-assistant-container
+
+    # Use GPU resources
+    runtime: nvidia
+
+    # Environment variables to request GPU
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - PYTHONUNBUFFERED=1
+
+    # Expose ports
+    ports:
+      - "8000:8000"  # FastAPI
+      - "8501:8501"  # Streamlit
+
+    # Mount local files into the container
+    volumes:
+      - .:/app
+
+    # Set working directory
+    working_dir: /app
+
+    # Start both FastAPI and Streamlit
+    command: >
+      bash -c "uvicorn backend.main:app --host 0.0.0.0 --port 8000 & 
+               streamlit run frontend/app.py --server.port 8501 --server.address 0.0.0.0"
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+    restart: always
+
